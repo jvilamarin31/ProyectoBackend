@@ -14,21 +14,28 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleEmailAlreadyExistsException(
             EmailAlreadyExistsException ex
     ) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT); // 409
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(MobilePhoneAlreadyExistsException.class)
     public ResponseEntity<String> handleMobilePhoneAlreadyExistsException(
             MobilePhoneAlreadyExistsException ex
     ) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT); // 409
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(MobilePhoneNotFoundException.class)
+    public ResponseEntity<String> handleMobilePhoneNotFoundException(
+            MobilePhoneNotFoundException ex
+    ) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleUserNotFoundException(
             UserNotFoundException ex
     ) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND); // 404
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     // Errores de validación (@Valid)
@@ -43,10 +50,10 @@ public class GlobalExceptionHandler {
                 .map(err -> err.getField() + ": " + err.getDefaultMessage())
                 .orElse("Error de validación");
 
-        return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST); // 400
+        return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
     }
 
-    // JSON mal formado
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handleInvalidFormat(
             HttpMessageNotReadableException ex
@@ -56,15 +63,26 @@ public class GlobalExceptionHandler {
                 .body("Formato inválido en la solicitud");
     }
 
-    // Fallback
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneralException(
-            Exception ex
-    ) {
+            Exception ex) {
         return new ResponseEntity<>(
                 "Ocurrió un error inesperado",
                 HttpStatus.INTERNAL_SERVER_ERROR
         );
+    }
+
+    // Excepción de jwt
+    @ExceptionHandler(JwtInvalidTokenException.class)
+    public ResponseEntity<String> handleJwtInvalidTokenException(
+            JwtInvalidTokenException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<String> handleInvalidCredentialsException(InvalidCredentialsException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 }
 
