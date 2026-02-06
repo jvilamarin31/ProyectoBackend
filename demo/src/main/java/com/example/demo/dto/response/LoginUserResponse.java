@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class LonginUserResponse {
+public class LoginUserResponse {
 
     private UserSessionResponse user;
 
