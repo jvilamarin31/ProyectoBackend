@@ -175,6 +175,20 @@ Esto evita depender del “auto-deploy” de Render por cada push.
 
 Este proyecto incluye una colección de Postman para probar los endpoints tanto en **local** como en **deploy**.
 
+### Importar la colección
+
+Tienes dos opciones para importar la colección de Postman:
+
+1. **Importar desde archivo JSON**: 
+   - Ve a la carpeta `postman/` en este repositorio
+   - Descarga el archivo JSON de la colección
+   - En Postman, haz clic en **Import** y selecciona el archivo descargado
+
+2. **Unirte al workspace compartido**:
+   - Usa este enlace de invitación: [Unirse al workspace de Postman](https://app.getpostman.com/join-team?invite_code=56439a4765204efb0a1eeb456b250b95347fc170d370ad35c38521eae8ebf281&target_code=35a127d0b524396584731d6ecc02f254)
+   - Acepta la invitación y tendrás acceso directo a la colección actualizada
+
+
 ### Estructura de la colección
 
 La colección está organizada en dos carpetas:
