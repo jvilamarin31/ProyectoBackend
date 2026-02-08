@@ -188,6 +188,25 @@ Tienes dos opciones para importar la colección de Postman:
    - Usa este enlace de invitación: [Unirse al workspace de Postman](https://app.getpostman.com/join-team?invite_code=56439a4765204efb0a1eeb456b250b95347fc170d370ad35c38521eae8ebf281&target_code=35a127d0b524396584731d6ecc02f254)
    - Acepta la invitación y tendrás acceso directo a la colección actualizada
 
+### Usuarios precargados en la base de datos en la nube
+
+La base de datos en MongoDB Atlas ya cuenta con **3 usuarios de prueba**. Puedes usar cualquiera de estos para hacer login y obtener un token:
+
+| Usuario | mobile_phone | password | email |
+|---------|--------------|----------|-------|
+| Jhon Eder | `3005004521` | `admin123` | admin@gmail.com |
+| Stiven Murillo | `3014002020` | `admin111` | stiven@gmail.com |
+| Jose Astudillo | `3000000000` | `password123` | astudillo@gmail.com |
+
+> **Nota importante:** Para crear nuevos usuarios, necesitas estar autenticado (tener un token). Por eso existen estos usuarios iniciales: para que puedas hacer login, obtener el token y luego crear más usuarios.
+
+**Ejemplo de login con el primer usuario:**
+```json
+{
+  "mobile_phone": "3005004521",
+  "password": "admin123"
+}
+```
 
 ### Estructura de la colección
 
@@ -214,8 +233,8 @@ En la petición `Login` envía un JSON con:
 Ejemplo:
 ```json
 {
-  "mobile_phone": "3001234567",
-  "password": "MiPassword123"
+  "mobile_phone": "3005004521",
+  "password": "admin23"
 }
 ```
 Al ejecutar Login, la respuesta retorna un token. Cópialo, porque lo vas a usar en las peticiones protegidas.
