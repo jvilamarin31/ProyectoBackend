@@ -1,4 +1,84 @@
 name: CI-CD.yml
 on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+
+concurrency:
+  group: ci-cd-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: demo
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Maven verify (tests + jacoco >= 70%)
+        run: mvn -B -ntp verify
+
+
+      - name: Build Docker image
+        run: docker build -t demo-api:ci -f Dockerfile .
+
+      - name: Docker smoke test (app starts)
+        run: |
+          set -e
+
+          docker run -d --name mongo -p 27017:27017 mongo:7
+
+          docker run -d --name app --network host \
+            -e SPRING_MONGODB_URI="mongodb://localhost:27017/ProyectoBD" \
+            -e JWT_SECRET="ci_dummy_secret_change_me" \
+            -p 8080:8080 \
+            demo-api:ci
+
+
+          for i in {1..30}; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/actuator/health || true)
+            if [ "$code" != "000" ]; then
+              break
+            fi
+            sleep 2
+          done
+
+          echo "HTTP status from /actuator/health: $code"
+
+          if [[ "$code" == "000" || "$code" =~ ^5 ]]; then
+            echo "App didn't start correctly. Logs:"
+            docker logs app || true
+            exit 1
+          fi
+
+          docker rm -f app mongo
+
+  deploy:
+    needs: ci
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Trigger Render deploy hook
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          set -e
+          if [ -z "$DEPLOY_HOOK_URL" ]; then
+            echo "Missing secret: RENDER_DEPLOY_HOOK_URL"
+            exit 1
+          fi
+          curl -fsS "$DEPLOY_HOOK_URL"
