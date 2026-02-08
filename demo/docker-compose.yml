@@ -4,3 +4,8 @@ services:
     container_name: prueba-spring
     ports:
       - "8080:8080"
+    environment:
+
+      - SPRING_MONGODB_URI=${SPRING_MONGODB_URI:-mongodb+srv://juanvila_db_user:95JNtH2Ujz7UKlYn@cluster0.qfukbh5.mongodb.net/}
+      - SPRING_MONGODB_DATABASE=${SPRING_MONGODB_DATABASE:-ProyectoBD}
+      - JWT_SECRET=${JWT_SECRET:-9f82a1c7b4d9e6f0a3c5d7e8f9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8}
