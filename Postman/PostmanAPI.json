@@ -1,0 +1,480 @@
+{
+  "info": {
+    "_postman_id": "8ee0a0ae-45d7-4f09-9faf-6a30d6f48e96",
+    "name": "API Documentation",
+    "description": "# GestorUsuarioPruebaBackend - Postman Collection\n\nEsta colección permite probar la API de gestión de usuarios tanto en entorno **local** como en **deploy**.\n\n## Carpetas disponibles\n\n### 1) LocalHost\n\nContiene todas las peticiones apuntando a la URL local (localhost).  \nÚsala si deseas ejecutar y probar el backend en tu máquina.\n\n### 2) Deploy\n\nContiene las mismas peticiones, pero apuntando a la URL del backend desplegado (Render).  \nÚsala para validar que el deploy funciona correctamente.\n\n> Ambas carpetas tienen el mismo contenido y comportamiento. La única diferencia es la URL. \n  \n\n---\n\n## Autenticación y seguridad\n\n### Endpoints que NO requieren token\n\nFuera de la carpeta `Security` se encuentran:\n\n- **GetUsers**\n    \n- **Login**\n    \n\n### Endpoints que SÍ requieren token\n\nDentro de la carpeta `Security` se encuentran:\n\n- **GetUser**\n    \n- **CreateUser**\n    \n- **UpdateUser**\n    \n- **DeleteUser**\n    \n\n### Cómo usar el token (Bearer Token)\n\n1. Ejecuta la petición **Login** con un usuario válido.\n    \n2. Copia el token retornado por la respuesta.\n    \n3. En cualquier petición dentro de `Security`, ve a **Authorization**:\n    \n    - Auth Type: **Bearer Token**\n        \n    - Token: pega el token generado en Login\n        \n\n> Nota: si el token está expirado o es inválido, la API puede responder con **403** o “Token inválido”. \n  \n\n---\n\n## Formatos de JSON\n\n### Login\n\nBody (JSON):\n\n{  \n\"mobile_phone\": \"3001234567\",  \n\"password\": \"MiPassword123\"  \n}\n\n### CreateUser\n\nBody (JSON):\n\n{  \n\"first_name\": \"Juan\",  \n\"last_name\": \"Vila\",  \n\"date_birth\": \"2003-01-15\",  \n\"mobile_phone\": \"3001234567\",  \n\"email\": \"[juan@email.com](https://mailto:juan@email.com)\",  \n\"password\": \"MiPassword123\",  \n\"address\": \"Cali, Colombia\"  \n}\n\n### UpdateUser\n\nPermite actualizar cualquiera de estos campos:  \n`first_name, last_name, date_birth, mobile_phone, email, password, address`\n\nAdemás, se debe indicar el **id del usuario** a actualizar (según esté definida la petición en Postman).\n\nEjemplo (JSON):\n\n{  \n\"email\": \"[nuevo@email.com](https://mailto:nuevo@email.com)\",  \n\"address\": \"Nueva dirección\"  \n}\n\n## Notas de uso\n\n- **GetUser**: requiere indicar el **id** del usuario a consultar.\n    \n- **GetUsers**: no requiere parámetros ni body.\n    \n- **DeleteUser**: requiere indicar el **id** del usuario a eliminar.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "43086831"
+  },
+  "item": [
+    {
+      "name": "LocalHost",
+      "item": [
+        {
+          "name": "Security",
+          "item": [
+            {
+              "name": "GetUser",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/users/",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ""
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CreateUser",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"first_name\" : \"Stiven\",\r\n    \"last_name\" : \"Murillo\",\r\n    \"date_birth\" : \"2009-09-17\",\r\n    \"mobile_phone\": \"3005004521\",\r\n    \"email\" : \"stiven@gmail.com\",\r\n    \"password\" : \"admin111\",\r\n    \"address\" : \"cl 86 #61-09\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/users",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "UpdateUser",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"first_name\" : \"\",\r\n    \"last_name\" : \"\",\r\n    \"date_birth\" : \"\",\r\n    \"mobile_phone\": \"\",\r\n    \"email\" : \"\",\r\n    \"password\" : \"\",\r\n    \"address\" : \"\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/users/69876db65a239e52d23ac801",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "69876db65a239e52d23ac801"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "DeleteUser",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/users/",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ""
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "",
+                "type": "string"
+              }
+            ]
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GetUsers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"mobile_phone\" : \"\",\r\n    \"password\" : \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/users/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Deploy",
+      "item": [
+        {
+          "name": "Security",
+          "item": [
+            {
+              "name": "GetUser",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://gestorusuariopruebabackend.onrender.com/api/v1/users/",
+                  "protocol": "http",
+                  "host": [
+                    "gestorusuariopruebabackend",
+                    "onrender",
+                    "com"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ""
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CreateUser",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"first_name\" : \"Stiven\",\r\n    \"last_name\" : \"Murillo\",\r\n    \"date_birth\" : \"2009-09-17\",\r\n    \"mobile_phone\": \"3005004521\",\r\n    \"email\" : \"stiven@gmail.com\",\r\n    \"password\" : \"admin111\",\r\n    \"address\" : \"cl 86 #61-09\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://gestorusuariopruebabackend.onrender.com/api/v1/users",
+                  "protocol": "http",
+                  "host": [
+                    "gestorusuariopruebabackend",
+                    "onrender",
+                    "com"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "UpdateUser",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"first_name\" : \"\",\r\n    \"last_name\" : \"\",\r\n    \"date_birth\" : \"\",\r\n    \"mobile_phone\": \"\",\r\n    \"email\" : \"\",\r\n    \"password\" : \"\",\r\n    \"address\" : \"\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://gestorusuariopruebabackend.onrender.com/api/v1/users/69876db65a239e52d23ac801",
+                  "protocol": "http",
+                  "host": [
+                    "gestorusuariopruebabackend",
+                    "onrender",
+                    "com"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "69876db65a239e52d23ac801"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "DeleteUser",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://gestorusuariopruebabackend.onrender.com/api/v1/users/",
+                  "protocol": "http",
+                  "host": [
+                    "gestorusuariopruebabackend",
+                    "onrender",
+                    "com"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ""
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "",
+                "type": "string"
+              }
+            ]
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GetUsers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://gestorusuariopruebabackend.onrender.com/api/v1/users",
+              "protocol": "http",
+              "host": [
+                "gestorusuariopruebabackend",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"mobile_phone\" : \"\",\r\n    \"password\" : \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://gestorusuariopruebabackend.onrender.com/api/v1/users/login",
+              "protocol": "http",
+              "host": [
+                "gestorusuariopruebabackend",
+                "onrender",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-Key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://farming-simulator.pstmn.io"
+    }
+  ]
+}
