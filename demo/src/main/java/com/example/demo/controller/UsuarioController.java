@@ -5,6 +5,7 @@ import com.example.demo.dto.request.UpdateUserRequest;
 import com.example.demo.dto.response.GetUserResponse;
 import com.example.demo.dto.response.UserBasicResponse;
 import com.example.demo.service.IUserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +22,12 @@ public class UsuarioController {
     }
 
     @PostMapping("api/v1/users")
-    public ResponseEntity<UserBasicResponse> createUser(@RequestBody CreateUserRequest userRequest) {
+    public ResponseEntity<UserBasicResponse> createUser(@Valid @RequestBody CreateUserRequest userRequest) {
         return new ResponseEntity<UserBasicResponse>(userService.createUser(userRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("api/v1/users/{id_user}")
-    public ResponseEntity<UserBasicResponse> updateUser(@RequestBody UpdateUserRequest userRequest, @PathVariable("id_user") String idUser) {
+    public ResponseEntity<UserBasicResponse> updateUser(@Valid @RequestBody UpdateUserRequest userRequest, @PathVariable("id_user") String idUser) {
         return new ResponseEntity<UserBasicResponse>(userService.updateUser(userRequest, idUser), HttpStatus.OK);
     }
 

@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.request.LoginUserRequest;
 import com.example.demo.dto.response.LoginUserResponse;
 import com.example.demo.service.IAuthService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ public class AuthController {
 
 
     @PostMapping("api/v1/users/login")
-    public ResponseEntity<LoginUserResponse> login(@RequestBody LoginUserRequest userRequest) {
+    public ResponseEntity<LoginUserResponse> login(@Valid @RequestBody LoginUserRequest userRequest) {
         return ResponseEntity.ok(authService.login(userRequest));
     }
 }
