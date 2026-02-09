@@ -176,7 +176,7 @@ El backend está desplegado en **Render**
 
 Render tiene una característica de **hibernación automática** en el plan gratuito:
 - Si la aplicación **no recibe tráfico durante un período de inactividad** (aproximadamente 15 minutos), Render la pone en modo "sleep" (hibernación).
-- La **primera petición después de la hibernación puede tardar entre 40-60 segundos** mientras Render reactiva el servicio.
+- La **primera petición después de la hibernación puede tardar entre 1 y 2 minutos** mientras Render reactiva el servicio.
 - Las peticiones subsecuentes serán normales.
 
 **Recomendación:** Si vas a probar la API en Postman y la app ha estado inactiva:
