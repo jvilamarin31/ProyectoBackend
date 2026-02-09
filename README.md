@@ -169,6 +169,23 @@ Si algo falla, el pipeline marca el build como fallido.
 ### CD (Continuous Deployment)
 Si el CI pasa, el pipeline dispara un despliegue en Render (deploy manual controlado desde GitHub Actions).
 Esto evita depender del “auto-deploy” de Render por cada push.
+
+---
+## Despliegue en Render
+
+El backend está desplegado en **Render** 
+### Importante: Hibernación automática
+
+Render tiene una característica de **hibernación automática** en el plan gratuito:
+- Si la aplicación **no recibe tráfico durante un período de inactividad** (aproximadamente 15 minutos), Render la pone en modo "sleep" (hibernación).
+- La **primera petición después de la hibernación puede tardar entre 40-60 segundos** mientras Render reactiva el servicio.
+- Las peticiones subsecuentes serán normales.
+
+**Recomendación:** Si vas a probar la API en Postman y la app ha estado inactiva:
+1. Haz la primera petición (por ejemplo, `GetUsers` o `Login`)
+2. Espera pacientemente 40-60 segundos
+3. Una vez que responda, las demás peticiones serán rápidas
+
 ---
 
 ## Probar la API con Postman
