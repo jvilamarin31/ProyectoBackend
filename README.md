@@ -3,8 +3,6 @@
 
 Si deseas ejecutar el proyecto en local, puedes crear la base de datos y la colección en MongoDB con el siguiente script.
 
-> Nota: La colección se llama **`Usuario`** (con mayúscula) porque el modelo en Spring usa `@Document("Usuario")`.
-
 ### 1) Crear base de datos y colección `Usuario`
 
 Ejecuta este script en MongoDB (mongosh o MongoDB Compass):
